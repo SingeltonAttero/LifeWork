@@ -16,7 +16,7 @@ class GameOfLiveGenerator(private val size: Int = 10) : GameOfLiveApi {
         val mapIndexed = matrix.mapIndexed { x, lifeBoxes ->
             lifeBoxes.mapIndexed { y, lifeBox ->
                 val aliveNeighbours = getAliveNeighbours(matrix, x, y)
-                lifeBox(lifeBox, aliveNeighbours, x, y)
+                lifeBox(lifeBox.isAlive, aliveNeighbours, x, y)
             }
         }
         return mapIndexed
@@ -35,39 +35,39 @@ class GameOfLiveGenerator(private val size: Int = 10) : GameOfLiveApi {
     }
 
     private fun lifeBox(
-        lifeBox: LifeBox,
+        isAlive: Boolean,
         aliveNeighbours: Int,
         x: Int,
         y: Int
     ): LifeBox {
-        return if (lifeBox.isAlive) {
-            lifeBoxAlive(aliveNeighbours, x, y)
+        return if (isAlive) {
+            lifeBoxAlive(aliveNeighbours = aliveNeighbours, x = x, y = y)
         } else {
-            lifeBoxDeath(aliveNeighbours, x, y)
+            lifeBoxDeath(aliveNeighbours = aliveNeighbours, x = x, y = y)
         }
     }
 
     private fun lifeBoxDeath(
         aliveNeighbours: Int,
         x: Int,
-        y: Int
+        y: Int,
     ): LifeBox {
         return if (aliveNeighbours == 3) {
-            LifeBox(x, y, true)
+            LifeBox(rowIndex = x, columnIndex = y, isAlive = true)
         } else {
-            LifeBox(x, y, false)
+            LifeBox(rowIndex = x, columnIndex = y, isAlive = false)
         }
     }
 
     private fun lifeBoxAlive(
         aliveNeighbours: Int,
         x: Int,
-        y: Int
+        y: Int,
     ): LifeBox {
         return if (aliveNeighbours < 2 || aliveNeighbours > 3) {
-            LifeBox(x, y, false)
+            LifeBox(rowIndex = x, columnIndex = y, isAlive = false)
         } else {
-            LifeBox(x, y, true)
+            LifeBox(rowIndex = x, columnIndex = y, isAlive = true)
         }
     }
 

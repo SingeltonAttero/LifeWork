@@ -1,6 +1,5 @@
 package ya.weber.lifework.presentation
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,9 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,12 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ya.weber.lifework.presentation.state.GameOfLiveState
 import ya.weber.lifework.presentation.state.LifeBox
 import ya.weber.lifework.presentation.theme.LifeWorkTheme
+import ya.weber.lifework.presentation.ui.bottom.AppBottom
 
 class MainActivity : ComponentActivity() {
 
@@ -65,23 +62,11 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Row {
                                 Spacer(modifier = Modifier.size(10.dp))
-                                Button(onClick = {
-                                    viewModel.start()
-                                }) {
-                                    Text("Start")
-                                }
+                                AppBottom("Start", viewModel::start)
                                 Spacer(modifier = Modifier.size(10.dp))
-                                Button(onClick = {
-                                    viewModel.pause()
-                                }) {
-                                    Text("Pause")
-                                }
+                                AppBottom("Pause", viewModel::pause)
                                 Spacer(modifier = Modifier.size(10.dp))
-                                Button(onClick = {
-                                    viewModel.addRandom()
-                                }) {
-                                    Text("Add 5 random")
-                                }
+                                AppBottom("Add Box", viewModel::addRandom)
                                 Spacer(modifier = Modifier.size(10.dp))
                             }
                         }
@@ -90,6 +75,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
 @Composable
@@ -134,7 +120,6 @@ fun WorldContainer(
 
 @Composable
 fun WorldTile(atom: LifeBox, modifier: Modifier = Modifier) {
-    val current: Context = LocalContext.current
     Box(
         modifier = modifier
             .size(10.dp)

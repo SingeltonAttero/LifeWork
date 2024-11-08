@@ -12,5 +12,5 @@ data class GameOfLiveState(
 data class LifeBox(
     val rowIndex: Int,
     val columnIndex: Int,
-    val isAlive: Boolean
+    val isAlive: Boolean,
 )

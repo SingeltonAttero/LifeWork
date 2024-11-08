@@ -15,7 +15,7 @@ import ya.weber.lifework.presentation.state.GameOfLiveState
 class MainActivityViewModel : ViewModel() {
     private val _state = MutableStateFlow(createState())
     private val gameOfLiveGenerator
-        get() = GameOfLiveGenerator(120)
+        get() = GameOfLiveGenerator(100)
     val state: Flow<GameOfLiveState>
         get() = _state
     private val startFlow = MutableStateFlow<Boolean>(false)
@@ -52,7 +52,17 @@ class MainActivityViewModel : ViewModel() {
 
     fun addRandom() {
         _state.value =
-            _state.value.copy(tiles = gameOfLiveGenerator.addNewRandomBox(_state.value.grid / 10, _state.value.tiles))
+            _state.value.copy(
+                tiles = gameOfLiveGenerator.addNewRandomBox(
+                    _state.value.grid / GRID_DIVIDER_COUNT,
+                    _state.value.tiles
+                )
+            )
+    }
+
+    companion object {
+        private const val GRID_DIVIDER_COUNT = 10
+
     }
 
 }
